@@ -3,3 +3,4 @@
 /geekshop/geekshop/static/img/
 /geekshop/db.sqlite3
 /.idea/
+/geekshop/.env
