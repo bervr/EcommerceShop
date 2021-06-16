@@ -1,0 +1,51 @@
+[
+  {
+      "category": 1,
+      "name": "Стул резной",
+      "image": "products_img/13953285712191_w904h3000_59Vzxsw.jpg",
+      "short_desc": "дорого бахато",
+      "description": "и бесполезно",
+      "price": "20000.00",
+      "quantity": 2
+
+  },
+  {
+      "category": 1,
+      "name": "Стол",
+      "image": "products_img/b79efc755e46bfa87dc1e10c925f7101_SE6CJZB.jpg",
+      "short_desc": "стол как стол",
+      "description": "",
+      "price": "5000.00",
+      "quantity": 500
+
+  },
+  {
+      "category": 3,
+      "name": "Бангладеш",
+      "image": "products_img/photo_2021-05-05_10-04-03.jpg",
+      "short_desc": "",
+      "description": "",
+      "price": "0.00",
+      "quantity": 1
+
+  },
+  {
+      "category": "Дом",
+      "name": "Стул фамильный",
+      "image": "products_img/product-4.jpg",
+      "short_desc": "Очень интересный стул",
+      "description": "Расположитесь комфортно.\r\n\r\nОтличное качество материалов позволит вам это.\r\n\r\nРазличные цвета\r\n\r\nвысочайший уровень эргономики и прочность.",
+      "price": "2300.00",
+      "quantity": 10
+  },
+  {
+      "category": "Офис",
+      "name": "Лампа сфера",
+      "image": "products_img/product-1.jpg",
+      "short_desc": "Простая лампа для гостиной",
+      "description": "Расположитесь комфортно.\r\n\r\nОтличное качество материалов позволит вам это.\r\n\r\nРазличные цвета\r\n\r\nвысочайший уровень эргономики и прочность.",
+      "price": "4500.00",
+      "quantity": 10
+  }
+
+]

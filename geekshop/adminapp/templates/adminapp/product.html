@@ -1,0 +1,25 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="col-3 mx-auto">
+    <form class="form-horizontal" action="
+        {% if not product %}
+            {% url 'admin_staff:product_create' pk %}
+        {% else %}
+            {% url 'admin_staff:product_update' product.pk %}
+        {% endif %}
+"
+        method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ product_form.as_p }}
+        <input class="form-control" type="submit" value="сохранить!">
+    </form>
+     <button class="btn btn-round form-control last">
+            <a href="{#% url 'admin_staff:products' product.category.pk %#}" class="">
+                назад в категорию
+            </a>
+     </button>
+    </div>
+
+{% endblock %}

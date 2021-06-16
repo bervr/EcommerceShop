@@ -1,0 +1,23 @@
+{% load static %}
+<div class="related">
+				<div class="title clearfix">
+					<h2>Похожие продукты</h2>
+					<a class="explore" href="/products/category/0/">показать все <img src="/static/img/arrow.png" alt=""></a>
+				</div>
+				<div class="related-products clearfix">
+                    {% for one_same in same_products %}
+                    <div class="block">
+						<a href="{% url 'products:product' one_same.pk %}">
+                            <img width="250" src="/media/{{ one_same.image }}" alt="{{ one_same.short_desc }}">
+							<div class="text">
+								<img src="{% static 'img/icon-hover.png' %}" alt="img">
+								<h4>{{one_same.name}}</h4>
+								<p>{{one_same.short_desc }} </p>
+							</div>
+						</a>
+					</div>
+                    {% endfor %}
+
+
+				</div>
+			</div>

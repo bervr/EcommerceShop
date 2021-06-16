@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+
+<div class="container">
+    {% block slider %}
+		<div class="hero-white">
+			{% include 'inc_menu.html' %}
+		</div>
+{% endblock %}
+{% block content %}
+		<div class="details">
+			<div class="links clearfix">
+                {% include 'inc_categories.html' %}
+			</div>
+
+         <div class="row my-5">
+            <div class="col-6">
+                <div class="slider-product">
+                    <a href="{% url 'products:product' hot_product.pk %}">
+                    <img src="/media/{{ hot_product.image }}" class="w-50" alt="{{ hot_product.short_desc }}">
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <h3 class="big-bold">{{ hot_product.name }}</h3>
+                <h3 class="red">горячее предложение</h3>
+                <p class="price">{{ hot_product.price }} <span>руб</span></p>
+                <a href="{% url 'basket:add' hot_product.pk %}" class="red-button">
+                  заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </a>
+                <div class="description-text">
+                  {{ hot_product.description }}
+                </div>
+            </div>
+    </div>
+
+            <h2>
+                Категория: {{ category.name }}
+            </h2>
+            <div class="category-products row">
+              {% for product in products %}
+                <div class="block w-25 my-3 mx-3">
+                  <a href="{% url 'products:product' product.pk %}">
+                    <img width="250" src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+                    <div class="text">
+                      <img src="{% static 'img/icon-hover.png' %}" alt="hover">
+                      <h4>{{ product.name }}</h4>
+                      <p>{{ product.description }} </p>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+        {% include 'inc_related.html' %}
+
+		</div>
+
+
+{% endblock %}

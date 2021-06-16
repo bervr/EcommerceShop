@@ -1,0 +1,16 @@
+ [ {
+      "name": "Офис",
+      "description": "",
+      "href": "1"
+  },
+  {
+      "name": "Дом",
+      "description": "",
+      "href": "2"
+  },
+  {
+      "name": "Садовая мебель",
+      "description": "",
+      "href": "3"
+  }
+  ]

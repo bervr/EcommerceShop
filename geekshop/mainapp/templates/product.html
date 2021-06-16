@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block slider %}
+	<div class="container">
+		<div class="hero-white">
+			{% include 'inc_menu.html' %}
+		</div>
+{% endblock %}
+{% block content %}
+		<div class="details">
+			<div class="links clearfix">
+                {% include 'inc_categories.html' %}
+			</div>
+
+         <div class="row my-5">
+            <div class="col-6">
+                <div class="slider-product">
+                  <img src="/media/{{ product.image }}" class="w-100">
+                </div>
+              </div>
+
+              <div class="col-6">
+                <h3 class="big-bold">{{ product.name }}</h3>
+{#                <h3 class="red">горячее предложение</h3>#}
+                <p class="price">{{ product.price }} <span>руб</span></p>
+                <a href="{% url 'basket:add' product.pk %}" class="red-button">
+                  заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </a>
+                <div class="description-text">
+                  {{ product.description }}
+                </div>
+            </div>
+    </div>
+
+			{% include 'inc_related.html' %}
+		</div>
+
+
+{% endblock %}

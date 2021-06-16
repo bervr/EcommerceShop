@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	{% block title %}
+	<title>Магазин</title>
+	{% endblock %}
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+    {% block css %}
+    {% endblock %}
+    {% block js %}
+    {% endblock %}
+</head>
+<body>
+	<div class="container">
+		{% block slider %}
+		<div class="slider">
+				{% include 'inc_menu.html' %}
+			<div class="text-slider">
+				<h3 class="green">тенденции</h3>
+				<h3 class="big"> удобные стулья</h3>
+				<p>Новый уровень комфорта. Отличные характеристики.</p>
+				<a href="#" class="button-order">заказать <img src="{% static 'img/arrow.png'%}" alt=""></a>
+			</div>	
+			<div class="navi">
+				<a href="#"></a><a href="#"></a><a href="#"></a>
+			</div>
+		</div>
+		{% endblock %}
+		{% block content %}
+		<div class="featured">
+			<div class="featured-menu">
+					<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
+			</div>
+			<a class="explore" href="#">показать все <img src="{% static '/img/arrow.png'%}" alt=""></a>
+			{% block clearfix %}
+            <div class="clearfix">
+			</div>
+            {% endblock %}
+			<div class="tab-content">
+                {% for product in products %}
+				<div class="block">
+					<a href="#"><img src="/media/{{ product.image }}" width="270" alt="">
+						<div class="text">
+							<img src="{% static '/img/icon-hover.png'%}" alt="img">
+							<h4>{{ product.name }}</h4>
+							<p>{{ product.short_desc}} </p>
+						</div> 
+					</a>
+				</div>
+                {% endfor %}
+			</div>
+		</div>
+		{% endblock %}
+		<div class="clr"></div>
+
+	</div>
+
+{%include 'inc_footer.html' %}
+
+</body>
+</html>
