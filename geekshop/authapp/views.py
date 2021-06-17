@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.contrib import  auth
 from django.shortcuts import HttpResponseRedirect
@@ -5,7 +7,7 @@ from .forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
 from django.urls import reverse
 
 # Create your views here.
-
+from .models import ShopUser
 
 
 def login(request):
@@ -56,11 +58,37 @@ def register(request):
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
 
         if register_form.is_valid():
-            register_form.save()
-            return HttpResponseRedirect(reverse('auth:login'))
+            user = register_form.save()
+            send_activation_link(user)
+            return render(request, 'authapp/sended.html')
+            # return HttpResponseRedirect(reverse('auth:login'))
     else:
         register_form = ShopUserRegisterForm()
 
     content = {'title': title, 'register_form': register_form}
 
     return render(request, 'authapp/register.html', content)
+
+def send_activation_link(user):
+    activation_link = reverse('authapp:activate', args =[user.email,user.activation_key])
+    subject = 'Email confirmation'
+    message = f'Open this link for confirm your email {settings.DOMAIN_NAME}{activation_link}'
+    email=  send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
+    return email
+
+
+def activate(request, email, key):
+    user = ShopUser.objects.filter(email = email).first()
+    if user and user.activation_key == key and not user.is_activation_key_expired():
+        user.is_active = True
+        user.activation_key = ''
+        user.is_activation_key_expired = None
+        user.save()
+        auth.login(request, user)
+        # return HttpResponseRedirect(reverse('auth:login'))
+    return render(request, 'authapp/activate.html')
+
+
+
+
+

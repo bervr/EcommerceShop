@@ -1,0 +1,9 @@
+{% extends 'authapp/base.html' %}
+
+{% block content %}
+{#    {% if user.is_authenticated %}#}
+        <p>Вам отправлено письмо для подтверждения адреса электронной почты</p>
+{#    {% endif %}#}
+{#    {% email %}#}
+    <a href="{% url 'index' %}"> На главную</a>
+{% endblock %}
