@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'authapp',
     'basketapp',
     'adminapp',
-
+    'social_django',
 ]
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'geekshop.urls'
@@ -164,3 +165,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/emails'
 
 DOMAIN_NAME = 'http://localhost:8000'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.vk.VKOAuth2'
+)
+VK_ID=os.getenv('VK_ID')
+VK_KEY=os.getenv('VK_KEY')
