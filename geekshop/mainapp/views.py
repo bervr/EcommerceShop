@@ -6,11 +6,11 @@ from .models import ProductCategory, Product
 from basketapp.models import Basket
 
 
-def get_basket(user):
-    if user.is_authenticated:
-        return Basket.objects.filter(user=user)
-    else:
-        return []
+# def get_basket(user):
+#     if user.is_authenticated:
+#         return Basket.objects.filter(user=user)
+#     else:
+#         return []
 
 
 def get_hot_product():
@@ -30,7 +30,7 @@ def products(request, pk=None):
 
     hot_product = get_hot_product()
     categories = ProductCategory.objects.all()
-    basket = get_basket(request.user)
+    # basket = get_basket(request.user)
     same_products = get_same_products(hot_product)
 
 
@@ -47,7 +47,7 @@ def products(request, pk=None):
         'categories': categories,
         'category': category,
         'products': products,
-        'basket': basket,
+        # 'basket': basket,
         'same_products': same_products,
         'hot_product': hot_product,
     }
@@ -62,7 +62,7 @@ def product(request, pk):
         'title': title,
         'categories': ProductCategory.objects.all(),
         'product': product,
-        'basket': get_basket(request.user),
+        # 'basket': get_basket(request.user),
         'same_products': get_same_products(product),
     }
     return render(request, 'product.html', context)
