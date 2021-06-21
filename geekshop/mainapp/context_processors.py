@@ -1,4 +1,4 @@
-from geekshop.basketapp.models import Basket
+from basketapp.models import Basket
 
 
 def basket(request):
