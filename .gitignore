@@ -1,7 +1,7 @@
 /geekshop/env/
 /geekshop/media/
 /geekshop/geekshop/static/img/
-/geekshop/db.sqlite3
 /.idea/
 /geekshop/.env
 /geekshop/tmp/
+/venv/

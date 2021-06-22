@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render
 from django.contrib import  auth
 from django.shortcuts import HttpResponseRedirect
-from .forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
+from .forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from django.urls import reverse
 
 # Create your views here.
@@ -40,13 +40,16 @@ def edit(request):
     title = 'редактирование'
     if request.method == 'POST':
         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
+        profile_form = ShopUserProfileEditForm(request.POST,instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and profile_form.is_valid:
             edit_form.save()
+            profile_form.save() #непонятно, все равно без этого не сохраняет
             return HttpResponseRedirect(reverse('auth:edit'))
     else:
         edit_form = ShopUserEditForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
-    content = {'title': title, 'edit_form': edit_form}
+    content = {'title': title, 'edit_form': edit_form, 'profile_form':profile_form }
 
     return render(request, 'authapp/edit.html', content)
 
@@ -56,7 +59,6 @@ def register(request):
 
     if request.method == 'POST':
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
-
         if register_form.is_valid():
             user = register_form.save()
             send_activation_link(user)
