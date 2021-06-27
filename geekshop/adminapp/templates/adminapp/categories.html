@@ -10,7 +10,8 @@
     </button>
 
     {% for object in objects %}
-      <div class="category_record {% if not object.is_active %} not_active {% endif %}">
+
+      <div class="category_record"  style ="{% if not object.is_active %} opacity: 0.5; {% endif %}">
         <div class="category_name">
           {{ object.name|title }}
         </div>

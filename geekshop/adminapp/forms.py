@@ -40,7 +40,6 @@ class ShopUserEditForm(UserChangeForm):
         data = self.cleaned_data['age']
         if data < 18:
             raise forms.ValidationError("Вы слишком молоды!")
-
         return data
 
 class ProductCategoryEditForm(forms.ModelForm):
@@ -53,6 +52,7 @@ class ProductCategoryEditForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
+
 
 class ProductCategoryCreateForm(forms.ModelForm):
     class Meta:

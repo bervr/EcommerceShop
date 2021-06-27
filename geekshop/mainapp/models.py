@@ -16,6 +16,8 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.name
 
+    is_active = models.BooleanField(default=True)
+
 
 
 class Product(models.Model):
