@@ -11,7 +11,7 @@ from social_core.exceptions import AuthForbidden
 
 
 def save_user_profile(backend, user, response, *args, **kwargs):
-    print(backend)
+    # print(backend)
     if backend.name != 'vk-oauth2':
         print('wrong backend')
         return

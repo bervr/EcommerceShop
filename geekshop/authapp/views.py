@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.mail import send_mail
 from django.shortcuts import render
-from django.contrib import  auth
+from django.contrib import auth
 from django.shortcuts import HttpResponseRedirect
 from .forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from django.urls import reverse
@@ -27,7 +27,7 @@ def login(request):
             else:
                 return HttpResponseRedirect(reverse('index'))
 
-    context = {'title':title, 'login_form': login_form, 'next': next,}
+    context = {'title': title, 'login_form': login_form, 'next': next, }
     return render(request, 'authapp/login.html', context=context)
 
 
@@ -40,16 +40,16 @@ def edit(request):
     title = 'редактирование'
     if request.method == 'POST':
         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-        profile_form = ShopUserProfileEditForm(request.POST,instance=request.user.shopuserprofile)
+        profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
         if edit_form.is_valid() and profile_form.is_valid:
             edit_form.save()
-            profile_form.save() #непонятно, все равно без этого не сохраняет
+            # profile_form.save() #непонятно, все равно без этого не сохраняет
             return HttpResponseRedirect(reverse('auth:edit'))
     else:
         edit_form = ShopUserEditForm(instance=request.user)
         profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
-    content = {'title': title, 'edit_form': edit_form, 'profile_form':profile_form }
+    content = {'title': title, 'edit_form': edit_form, 'profile_form': profile_form}
 
     return render(request, 'authapp/edit.html', content)
 
@@ -71,16 +71,17 @@ def register(request):
 
     return render(request, 'authapp/register.html', content)
 
+
 def send_activation_link(user):
-    activation_link = reverse('authapp:activate', args =[user.email,user.activation_key])
+    activation_link = reverse('authapp:activate', args=[user.email, user.activation_key])
     subject = 'Email confirmation'
     message = f'Open this link for confirm your email {settings.DOMAIN_NAME}{activation_link}'
-    email=  send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
+    email = send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
     return email
 
 
 def activate(request, email, key):
-    user = ShopUser.objects.filter(email = email).first()
+    user = ShopUser.objects.filter(email=email).first()
     if user and user.activation_key == key and not user.is_activation_key_expired():
         user.is_active = True
         user.activation_key = ''
@@ -89,8 +90,3 @@ def activate(request, email, key):
         auth.login(request, user)
         # return HttpResponseRedirect(reverse('auth:login'))
     return render(request, 'authapp/activate.html')
-
-
-
-
-
