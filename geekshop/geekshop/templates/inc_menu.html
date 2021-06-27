@@ -13,10 +13,25 @@
                       {% endif %}">контакты</a></li>
         {% if user.is_authenticated %}
             <li>
-                <a href="{% url 'auth:edit' %}" class="{% if request.resolver_match.route == 'auth/profile/' %}
-                        active {% endif %}">
-                    {{ user.first_name|default:'Пользователь' }}
-                </a>
+            <div class="dropdown">
+               <a class="dropdown-toggle" href="" data-toggle="dropdown">
+                   {{ user.first_name|default:'Пользователь' }}
+                   <span class="caret"></span>
+               </a>
+           <ul class="dropdown-menu">
+               <li>
+                     <a href="{% url 'auth:edit' %}" class="{% if request.resolver_match.route == 'auth/profile/' %}
+                       active {% endif %}">
+                       профиль
+                   </a>
+               </li>
+               <li>
+                   <a href="{% url 'ordersapp:list' %}">
+                       заказы
+                   </a>
+               </li>
+           </ul>
+       </div>
             </li>
         {% endif %}
     {% if user.is_superuser %}
