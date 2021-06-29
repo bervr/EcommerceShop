@@ -41,10 +41,19 @@ class Order(models.Model):
     def __str__(self):
         return 'Текущий заказ: {}'.format(self.id)
 
+    def delete(self):
+        for item in self.orderitems.select_related():
+            item.product.quantity = item.quantity
+            item.product.save()
+        self.is_active = False
+        self.save()
+
     class Meta:
         ordering = ('-created',)
         verbose_name = 'заказ'
         verbose_name_plural = 'заказы'
+
+
 
 
 class OrderItem(models.Model):
