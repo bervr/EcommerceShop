@@ -43,7 +43,7 @@ class Order(models.Model):
 
     def delete(self):
         for item in self.orderitems.select_related():
-            item.product.quantity = item.quantity
+            item.product.quantity += item.quantity
             item.product.save()
         self.is_active = False
         self.save()
@@ -52,6 +52,11 @@ class Order(models.Model):
         ordering = ('-created',)
         verbose_name = 'заказ'
         verbose_name_plural = 'заказы'
+
+
+    @staticmethod
+    def get_item(pk):
+        return Order.objects.get(pk=pk)
 
 
 
@@ -68,4 +73,6 @@ class OrderItem(models.Model):
 
     def get_product_cost(self):
         return self.product.price * self.quantity
+
+
 
