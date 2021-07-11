@@ -45,6 +45,8 @@ class OrderUpdate(UpdateView):
             if orderitems.is_valid():
                 orderitems.instance = self.object
                 orderitems.save()
+
+
         return super().form_valid(form)
 
 
@@ -63,7 +65,6 @@ class OrderCreate(CreateView):
             if basket_items.exists():
                 OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemEditForm,
                                                      extra=basket_items.count())
-                user = "Уася"
                 formset = OrderFormSet()
                 data['user'] = "Уася"  # self.request.user
                 for num, form in enumerate(formset.forms):
@@ -71,9 +72,9 @@ class OrderCreate(CreateView):
                     form.initial['quantity'] = basket_items[num].quantity
                     form.initial['price'] = basket_items[num].product.price
                 # data['get_total_quantity'] = sum(list(map(lambda x: x.quantity, basket_items)))
-                # formset.initial['get_total_cost'] = sum(list(map(lambda x: x.product_cost, basket_items)))
-                # form.instance.user = self.request.user
-                # formset.initial['user'] = "Уася"#self.request.user
+                # data['get_total_cost'] = sum(list(map(lambda x: x.product_cost, basket_items)))
+                # # form.instance.user = self.request.user
+                # data['user'] = "Уася"#self.request.user
             else:
                 formset = OrderFormSet()
         data['orderitems'] = formset
@@ -88,6 +89,8 @@ class OrderCreate(CreateView):
             if orderitems.is_valid():
                 orderitems.instance = self.object
                 orderitems.save()
+        if self.object.get_total_cost() == 0:
+            self.object.delete()
         return super().form_valid(form)
 
 
