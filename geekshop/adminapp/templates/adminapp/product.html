@@ -12,11 +12,11 @@
 "
         method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ product_form.as_p }}
+        {{ form.as_p }}
         <input class="form-control" type="submit" value="сохранить!">
     </form>
      <button class="btn btn-round form-control last">
-            <a href="{#% url 'admin_staff:products' product.category.pk %#}" class="">
+            <a href="{% url 'admin_staff:products' category.pk %}" class="">
                 назад в категорию
             </a>
      </button>
