@@ -30,7 +30,7 @@
 
   },
   {
-      "category": "Дом",
+      "category": 1,
       "name": "Стул фамильный",
       "image": "products_img/product-4.jpg",
       "short_desc": "Очень интересный стул",
@@ -39,7 +39,7 @@
       "quantity": 10
   },
   {
-      "category": "Офис",
+      "category": 2,
       "name": "Лампа сфера",
       "image": "products_img/product-1.jpg",
       "short_desc": "Простая лампа для гостиной",

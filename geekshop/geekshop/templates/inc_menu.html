@@ -19,13 +19,13 @@
                    <span class="caret"></span>
                </a>
            <ul class="dropdown-menu">
-               <li>
+               <li class="dropdown-li">
                      <a href="{% url 'auth:edit' %}" class="{% if request.resolver_match.route == 'auth/profile/' %}
                        active {% endif %}">
                        профиль
                    </a>
                </li>
-               <li>
+               <li class="dropdown-li">
                    <a href="{% url 'ordersapp:list' %}">
                        заказы
                    </a>

@@ -1076,3 +1076,8 @@ td:first-child {
 	display: block;
 }
 
+.dropdown-li{
+	padding: 2px;
+	margin: 10px 15px ;
+}
+
