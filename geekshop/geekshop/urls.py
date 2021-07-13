@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 import mainapp.urls as urls
 
 from . import settings
@@ -39,4 +39,5 @@ if settings.DEBUG:
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += path('__debug__/', include(debug_toolbar.urls))
+
+    urlpatterns += [re_path(r'^__debug__/', include(debug_toolbar.urls))]
