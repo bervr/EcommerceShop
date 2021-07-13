@@ -3,3 +3,4 @@
 /geekshop/.env
 /geekshop/tmp/
 /venv/
+*/__pycache__/
