@@ -192,7 +192,7 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_VK_OAUTH2_KEY=os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY')
 SOCIAL_AUTH_VK_OAUTH2_SECRET=os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET')
-
+#### траляля
 
 LOGIN_ERROR_URL = '/'
 
@@ -228,7 +228,7 @@ if DEBUG:
        'debug_toolbar.panels.request.RequestPanel',
        'debug_toolbar.panels.sql.SQLPanel',
        'debug_toolbar.panels.templates.TemplatesPanel',
-       'debug_toolbar.panels.staticfiles.StaticFilesPanel',  # <-курва!
+       'debug_toolbar.panels.staticfiles.StaticFilesPanel',
        'debug_toolbar.panels.cache.CachePanel',
        'debug_toolbar.panels.signals.SignalsPanel',
        'debug_toolbar.panels.logging.LoggingPanel',
