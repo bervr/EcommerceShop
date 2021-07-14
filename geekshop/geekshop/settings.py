@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'social_django',
     'ordersapp',
     'debug_toolbar',
-    'template_profiler_panel'
+    'template_profiler_panel',
+    'django_extensions',
 ]
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
@@ -226,7 +227,7 @@ if DEBUG:
        'debug_toolbar.panels.request.RequestPanel',
        'debug_toolbar.panels.sql.SQLPanel',
        'debug_toolbar.panels.templates.TemplatesPanel',
-       # 'debug_toolbar.panels.staticfiles.StaticFilesPanel',  # <-курва!
+       'debug_toolbar.panels.static.StaticFilesPanel',  # <-курва!
        'debug_toolbar.panels.cache.CachePanel',
        'debug_toolbar.panels.signals.SignalsPanel',
        'debug_toolbar.panels.logging.LoggingPanel',
