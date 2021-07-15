@@ -3,6 +3,8 @@ from django.core.mail import send_mail
 from django.shortcuts import render
 from django.contrib import  auth
 from django.shortcuts import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+
 from .forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from django.urls import reverse
 
@@ -10,6 +12,8 @@ from django.urls import reverse
 from .models import ShopUser
 
 
+
+@csrf_exempt
 def login(request):
     title = 'Вход'
 
