@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
 from ordersapp.models import Order, OrderItem
@@ -16,6 +18,10 @@ class OrderList(ListView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user, is_active=True)
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderUpdate(UpdateView):
@@ -36,6 +42,11 @@ class OrderUpdate(UpdateView):
             data['orderitems'] = orderitemformset
         return data
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
+
+
     def form_valid(self, form):
         context = self.get_context_data()
         orderitems = context['orderitems']
@@ -45,6 +56,7 @@ class OrderUpdate(UpdateView):
             if orderitems.is_valid():
                 orderitems.instance = self.object
                 orderitems.save()
+
 
 
         return super().form_valid(form)
@@ -80,6 +92,10 @@ class OrderCreate(CreateView):
         data['orderitems'] = formset
         return data
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
+
     def form_valid(self, form):
         context = self.get_context_data()
         orderitems = context['orderitems']
@@ -98,9 +114,17 @@ class OrderDelete(DeleteView):
     model = Order
     success_url = reverse_lazy('order:list')
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
+
 
 class OrderRead(DetailView):
     model = Order
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
 
 
 def forming_complete(request, pk):
