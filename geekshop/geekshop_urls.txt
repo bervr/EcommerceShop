@@ -1,7 +1,1 @@
-http://5.63.153.250/
-http://5.63.153.250/products/category/0/
-http://5.63.153.250/products/category/7/
-http://5.63.153.250/auth/edit/
-http://5.63.153.250/order/
-http://5.63.153.250/order/read/1/
-http://5.63.153.250/basket/
+http://5.63.153.250/order/update/4/

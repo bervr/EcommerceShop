@@ -37,6 +37,8 @@ class OrderUpdate(UpdateView):
         else:
             queryset = self.object.orderitems.select_related()
             orderitemformset = OrderFormSet(instance=self.object, queryset= queryset)
+            # queryset = self.object.orderitems
+            # orderitemformset = OrderFormSet(instance=self.object)
             for form in orderitemformset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
@@ -45,7 +47,7 @@ class OrderUpdate(UpdateView):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+        return super(UpdateView, self).dispatch(*args, **kwargs)
 
 
     def form_valid(self, form):
@@ -79,7 +81,7 @@ class OrderCreate(CreateView):
                 OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemEditForm,
                                                      extra=basket_items.count())
                 formset = OrderFormSet()
-                data['user'] = "Уася"  # self.request.user
+                # data['user'] = "Уася"  # self.request.user
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = basket_items[num].product
                     form.initial['quantity'] = basket_items[num].quantity
@@ -95,7 +97,7 @@ class OrderCreate(CreateView):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+        return super(CreateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         context = self.get_context_data()
@@ -117,7 +119,7 @@ class OrderDelete(DeleteView):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+        return super(DeleteView, self).dispatch(*args, **kwargs)
 
 
 class OrderRead(DetailView):
@@ -125,7 +127,7 @@ class OrderRead(DetailView):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+        return super(DetailView, self).dispatch(*args, **kwargs)
 
 
 def forming_complete(request, pk):

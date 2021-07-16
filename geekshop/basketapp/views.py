@@ -13,7 +13,7 @@ from ordersapp.models import OrderItem
 
 def basket(request):
     if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
+        basket = Basket.objects.filter(user=request.user).select_related()
         products = Product.objects.all().values('pk', 'price')
         context = {
             'basket': basket,
@@ -30,10 +30,10 @@ def basket_add(request, pk):
 
     product = get_object_or_404(Product, pk=pk)
 
-    basket = Basket.objects.filter(user=request.user, product=product).first()
+    basket = Basket.objects.filter(user=request.user, product=product).first().select_related()
 
     if not basket:
-        basket = Basket(user=request.user, product=product)
+        basket = Basket(user=request.user, product=product).select_related()
 
     basket.quantity += 1
     basket.save()
@@ -52,7 +52,7 @@ def basket_remove(request, pk):
 def basket_edit(request, pk, quantity):
     if request.is_ajax():
         quantity = int(quantity)
-        new_basket_item = Basket.objects.get(pk=int(pk))
+        new_basket_item = Basket.objects.get(pk=int(pk)).select_related()
 
         if quantity > 0:
             new_basket_item.quantity = quantity
@@ -60,7 +60,7 @@ def basket_edit(request, pk, quantity):
         else:
             new_basket_item.delete()
 
-        basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
+        basket_items = Basket.objects.filter(user=request.user).order_by('product__category').select_related()
 
         content = {
             'basket': basket_items,

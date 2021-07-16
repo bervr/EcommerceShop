@@ -14,12 +14,12 @@ from basketapp.models import Basket
 
 
 def get_hot_product():
-    products = Product.objects.all()
+    products = Product.objects.all().select_related()
     return sample(list(products), 1)[0]
 
 
 def get_same_products(hot_products):
-    same_products = Product.objects.filter(category=hot_products.category).exclude(pk=hot_products.pk)[:3]
+    same_products = Product.objects.filter(category=hot_products.category).select_related().exclude(pk=hot_products.pk)[:3]
     return same_products
 
 
@@ -29,7 +29,7 @@ def products(request, pk=None):
     products = ''
 
     hot_product = get_hot_product()
-    categories = ProductCategory.objects.all()
+    categories = ProductCategory.objects.all().select_related()
     # basket = get_basket(request.user)
     same_products = get_same_products(hot_product)
 
@@ -40,7 +40,7 @@ def products(request, pk=None):
             category = {'name': 'все'}
         else:
             category = get_object_or_404(ProductCategory, pk=pk)
-            products = Product.objects.filter(category_id__pk=pk).order_by('price')
+            products = Product.objects.filter(category_id__pk=pk).order_by('price').select_related()
 
     context = {
         'title': title,
@@ -60,7 +60,7 @@ def product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     context = {
         'title': title,
-        'categories': ProductCategory.objects.all(),
+        'categories': ProductCategory.objects.all().select_related(),
         'product': product,
         # 'basket': get_basket(request.user),
         'same_products': get_same_products(product),
