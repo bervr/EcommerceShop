@@ -14,7 +14,7 @@ from ordersapp.models import OrderItem
 def basket(request):
     if request.user.is_authenticated:
         basket = Basket.objects.filter(user=request.user).select_related()
-        products = Product.objects.all().values('pk', 'price')
+        products = Product.objects.all().select_related().values('pk', 'price')
         context = {
             'basket': basket,
             'products': products,
@@ -28,9 +28,9 @@ def basket_add(request, pk):
     if 'login' in request.META.get('HTTP_REFERER'):
         return HttpResponseRedirect(reverse('products:product', args=[pk]))
 
-    product = get_object_or_404(Product, pk=pk)
+    product = get_object_or_404(Product, pk=pk).select_related()
 
-    basket = Basket.objects.filter(user=request.user, product=product).first().select_related()
+    basket = Basket.objects.filter(user=request.user, product=product).select_related().first()
 
     if not basket:
         basket = Basket(user=request.user, product=product).select_related()
@@ -43,7 +43,7 @@ def basket_add(request, pk):
 
 @login_required
 def basket_remove(request, pk):
-    basket_record = get_object_or_404(Basket, pk=pk)
+    basket_record = get_object_or_404(Basket, pk=pk).select_related()
     basket_record.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -60,7 +60,7 @@ def basket_edit(request, pk, quantity):
         else:
             new_basket_item.delete()
 
-        basket_items = Basket.objects.filter(user=request.user).order_by('product__category').select_related()
+        basket_items = Basket.objects.filter(user=request.user).select_related().order_by('product__category')
 
         content = {
             'basket': basket_items,

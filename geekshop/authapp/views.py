@@ -84,7 +84,7 @@ def send_activation_link(user):
 
 
 def activate(request, email, key):
-    user = ShopUser.objects.filter(email = email).first()
+    user = ShopUser.objects.filter(email = email).first().select_related()
     if user and user.activation_key == key and not user.is_activation_key_expired():
         user.is_active = True
         user.activation_key = ''

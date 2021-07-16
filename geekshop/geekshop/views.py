@@ -5,11 +5,11 @@ from mainapp.models import Product, ProductCategory
 
 
 def main(request):
-    products = Product.objects.all()[:4]
-    products_category = ProductCategory.objects.all()[:4]
+    products = Product.objects.all().select_related()[:4]
+    products_category = ProductCategory.objects.all().select_related()[:4]
     basket =[]
     if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
+        basket = Basket.objects.filter(user=request.user).select_related()
     do_active = {
         'products': products,
         'products_category': products_category,

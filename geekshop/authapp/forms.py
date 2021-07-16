@@ -58,6 +58,7 @@ class ShopUserEditForm(UserChangeForm):
             if field_name == 'password':
                 field.widget = forms.HiddenInput()
 
+
     def clean_age(self):
         data = self.cleaned_data['age']
         if data < 18:

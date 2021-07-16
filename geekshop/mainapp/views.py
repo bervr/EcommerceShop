@@ -29,18 +29,18 @@ def products(request, pk=None):
     products = ''
 
     hot_product = get_hot_product()
-    categories = ProductCategory.objects.all().select_related()
+    categories = ProductCategory.objects.all()
     # basket = get_basket(request.user)
     same_products = get_same_products(hot_product)
 
 
     if pk is not None:
         if pk == 0:
-            products = Product.objects.all().order_by('price')
+            products = Product.objects.all().select_related().order_by('price')
             category = {'name': 'все'}
         else:
             category = get_object_or_404(ProductCategory, pk=pk)
-            products = Product.objects.filter(category_id__pk=pk).order_by('price').select_related()
+            products = Product.objects.filter(category_id__pk=pk).select_related().order_by('price')
 
     context = {
         'title': title,
@@ -57,10 +57,10 @@ def products(request, pk=None):
 @login_required
 def product(request, pk):
     title = 'страница продута'
-    product = get_object_or_404(Product, pk=pk)
+    product = get_object_or_404(Product, pk=pk).select_related()
     context = {
         'title': title,
-        'categories': ProductCategory.objects.all().select_related(),
+        'categories': ProductCategory.objects.all(),
         'product': product,
         # 'basket': get_basket(request.user),
         'same_products': get_same_products(product),
