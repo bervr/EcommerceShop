@@ -90,7 +90,7 @@ def product(request, pk):
     context = {
         'title': title,
         'links_menu': get_links_menu(),
-        'categories': ProductCategory.objects.all(),
+        # 'categories': ProductCategory.objects.all(),
         'product': product,
         # 'basket': get_basket(request.user),
         'same_products': get_same_products(product),
