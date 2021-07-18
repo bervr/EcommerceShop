@@ -43,7 +43,7 @@ def basket_add(request, pk):
 
 @login_required
 def basket_remove(request, pk):
-    basket_record = get_object_or_404(Basket, pk=pk).select_related()
+    basket_record = get_object_or_404(Basket, pk=pk)
     basket_record.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -51,9 +51,9 @@ def basket_remove(request, pk):
 @login_required
 def basket_edit(request, pk, quantity):
     if request.is_ajax():
+        print(request)
         quantity = int(quantity)
-        new_basket_item = Basket.objects.get(pk=int(pk)).select_related()
-
+        new_basket_item = Basket.objects.get(pk=int(pk))
         if quantity > 0:
             new_basket_item.quantity = quantity
             new_basket_item.save()
