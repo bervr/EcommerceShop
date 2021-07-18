@@ -33,7 +33,7 @@ def basket_add(request, pk):
     basket = Basket.objects.filter(user=request.user, product=product).select_related().first()
 
     if not basket:
-        basket = Basket(user=request.user, product=product).select_related()
+        basket = Basket(user=request.user, product=product)
 
     basket.quantity += 1
     basket.save()
