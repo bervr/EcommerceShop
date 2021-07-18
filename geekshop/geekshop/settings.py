@@ -103,10 +103,7 @@ if platform.system() == 'Windows':
         }
     }
 
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "geekshop","static"),
-        os.path.join(BASE_DIR, "basketapp","static"),
-    )
+
     DOMAIN_NAME = 'http://localhost:8000'
 else:
     DOMAIN_NAME = 'http://5.63.153.250'
@@ -164,6 +161,10 @@ STATICFILES_FINDERS = (
 
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "geekshop", "static"),
+    os.path.join(BASE_DIR, "basketapp", "static"),
+)
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
