@@ -29,6 +29,6 @@ social-auth-core==4.1.0
 sqlparse==0.4.1
 urllib3==1.26.5
 wrapt==1.12.1
-psycopg2
+psycopg2-binary
 gunicorn
 wheel
