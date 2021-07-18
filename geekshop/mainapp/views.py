@@ -4,18 +4,34 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from .models import ProductCategory, Product
 from basketapp.models import Basket
+from django.conf import settings
+from django.core.cache import cache
 
+
+
+
+def get_links_menu():
+    if settings.LOW_CACHE:
+        key = 'links_menu'
+        links_menu = cache.get(key)
+        if links_menu is None:
+            links_menu = ProductCategory.objects.filter(is_active=True)
+            cache.set(key, links_menu)
+        else:
+            return links_menu
+    else:
+        return ProductCategory.objects.filter(is_active=True)
+
+
+def get_hot_product():
+    products = Product.objects.all().select_related()
+    return sample(list(products), 1)[0]
 
 # def get_basket(user):
 #     if user.is_authenticated:
 #         return Basket.objects.filter(user=user)
 #     else:
 #         return []
-
-
-def get_hot_product():
-    products = Product.objects.all().select_related()
-    return sample(list(products), 1)[0]
 
 
 def get_same_products(hot_products):
@@ -47,6 +63,7 @@ def products(request, pk=None):
         'categories': categories,
         'category': category,
         'products': products,
+        'links_menu':get_links_menu(),
         # 'basket': basket,
         'same_products': same_products,
         'hot_product': hot_product,

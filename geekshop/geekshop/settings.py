@@ -98,6 +98,7 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 if prod :
+    LOW_CACHE = True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -106,6 +107,7 @@ if prod :
         }
     }
 else:
+    LOW_CACHE = False
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -257,7 +259,7 @@ if prod:
             'LOCATION': '127.0.0.1:11211',
         }
     }
-    LOW_CACHE = True
+
 
 
 
