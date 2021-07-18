@@ -15,12 +15,12 @@ def get_links_menu():
         key = 'links_menu'
         links_menu = cache.get(key)
         if links_menu is None:
-            links_menu = ProductCategory.objects.filter(is_active=True)
+            links_menu = ProductCategory.objects.filter(is_active=True).select_related()
             cache.set(key, links_menu)
         else:
             return links_menu
     else:
-        return ProductCategory.objects.filter(is_active=True)
+        return ProductCategory.objects.filter(is_active=True).select_related()
 
 
 def get_hot_product():
