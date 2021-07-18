@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if platform.system() == 'Windows'
+if platform.system() == 'Windows':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
