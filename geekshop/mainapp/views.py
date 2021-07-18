@@ -57,7 +57,7 @@ def products(request, pk=None):
 @login_required
 def product(request, pk):
     title = 'страница продута'
-    product = get_object_or_404(Product, pk=pk).select_related()
+    product = get_object_or_404(Product, pk=pk)
     context = {
         'title': title,
         'categories': ProductCategory.objects.all(),
