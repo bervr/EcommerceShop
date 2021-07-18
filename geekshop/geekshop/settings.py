@@ -182,8 +182,8 @@ EMAIL_USE_SSL=os.getenv('EMAIL_USE_SSL')
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/emails'
 
-DOMAIN_NAME = 'http://localhost:8000'
-# DOMAIN_NAME = 'http://5.63.153.250'
+# DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = 'http://5.63.153.250'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
