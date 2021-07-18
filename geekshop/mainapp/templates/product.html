@@ -1,14 +1,21 @@
-{% extends 'index.html' %}
-
+{% extends 'base.html' %}
 {% load static %}
 
-{% block slider %}
-	<div class="container">
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	{% block title %}
+	<title>{{ title }}</title>
+	{% endblock %}
+</head>
+<body>
+    {% block menu %}
 		<div class="hero-white">
 			{% include 'inc_menu.html' %}
 		</div>
-{% endblock %}
-{% block content %}
+    {% endblock %}
+    {% block content %}
 		<div class="details">
 			<div class="links clearfix">
                 {% include 'inc_categories.html' %}
