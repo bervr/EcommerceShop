@@ -3,7 +3,6 @@ from functools import cached_property
 from django.db import models
 from geekshop import settings
 from mainapp.models import Product
-# Create your models here.
 
 
 # class BasketQuerySet(models.QuerySet):
@@ -26,34 +25,24 @@ class Basket(models.Model):
     def product_cost(self):
         return self.product.price * self.quantity
 
-    @property
     def total_quantity(self):
         # _items = Basket.objects.filter(user=self.user)
-        _items = self.get_item_cached()
+        _items = self.get_items_cached
         _total_quantity = sum(list(map(lambda x: x.quantity, _items)))
         return _total_quantity
 
-    @property
     def total_cost(self):
         # _items = Basket.objects.filter(user=self.user)
-        _items = self.get_item_cached()
+        _items = self.get_items_cached
         _total_cost = sum(list(map(lambda x: x.product_cost, _items)))
         return _total_cost
 
-
     @staticmethod
-    def get_item(user):
-        # return Basket.objects.get(pk=pk).select_related()
-        return user.basket.select_related().order_by('product__cetegory')
-
-
-    # @staticmethod
-    # def get_item(pk):
-    #     return Basket.objects.get(pk=pk).select_related()
-
+    def get_item(pk):
+        return Basket.objects.get(pk=pk).select_related()
 
     @cached_property
-    def get_item_cached(self):
+    def get_items_cached(self):
         return self.user.basket.select_related()
 
 
