@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
 from ordersapp.models import Order, OrderItem
@@ -15,7 +17,12 @@ class OrderList(ListView):
     model = Order
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user, is_active=True)
+        return Order.objects.filter(user=self.request.user, is_active=True).select_related()
+
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderUpdate(UpdateView):
@@ -29,12 +36,20 @@ class OrderUpdate(UpdateView):
         if self.request.POST:
             data['orderitems'] = OrderFormSet(self.request.POST, instance=self.object)
         else:
-            orderitemformset = OrderFormSet(instance=self.object)
+            queryset = self.object.orderitems.select_related()
+            orderitemformset = OrderFormSet(instance=self.object, queryset= queryset)
+            # queryset = self.object.orderitems
+            # orderitemformset = OrderFormSet(instance=self.object)
             for form in orderitemformset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
             data['orderitems'] = orderitemformset
         return data
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(UpdateView, self).dispatch(*args, **kwargs)
+
 
     def form_valid(self, form):
         context = self.get_context_data()
@@ -45,6 +60,7 @@ class OrderUpdate(UpdateView):
             if orderitems.is_valid():
                 orderitems.instance = self.object
                 orderitems.save()
+
 
 
         return super().form_valid(form)
@@ -61,12 +77,12 @@ class OrderCreate(CreateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
-            basket_items = Basket.objects.filter(user=self.request.user)
+            basket_items = Basket.objects.filter(user=self.request.user).select_related()
             if basket_items.exists():
                 OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemEditForm,
                                                      extra=basket_items.count())
                 formset = OrderFormSet()
-                data['user'] = "Уася"  # self.request.user
+                # data['user'] = "Уася"  # self.request.user
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = basket_items[num].product
                     form.initial['quantity'] = basket_items[num].quantity
@@ -79,6 +95,10 @@ class OrderCreate(CreateView):
                 formset = OrderFormSet()
         data['orderitems'] = formset
         return data
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(CreateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         context = self.get_context_data()
@@ -98,9 +118,17 @@ class OrderDelete(DeleteView):
     model = Order
     success_url = reverse_lazy('order:list')
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(DeleteView, self).dispatch(*args, **kwargs)
+
 
 class OrderRead(DetailView):
     model = Order
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(DetailView, self).dispatch(*args, **kwargs)
 
 
 def forming_complete(request, pk):

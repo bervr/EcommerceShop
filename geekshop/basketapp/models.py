@@ -41,4 +41,4 @@ class Basket(models.Model):
 
     @staticmethod
     def get_item(pk):
-        return Basket.objects.get(pk=pk)
+        return Basket.objects.get(pk=pk).select_related()

@@ -3,6 +3,8 @@ from django.core.mail import send_mail
 from django.shortcuts import render
 from django.contrib import  auth
 from django.shortcuts import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+
 from .forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from django.urls import reverse
 
@@ -10,6 +12,8 @@ from django.urls import reverse
 from .models import ShopUser
 
 
+
+@csrf_exempt
 def login(request):
     title = 'Вход'
 
@@ -80,7 +84,7 @@ def send_activation_link(user):
 
 
 def activate(request, email, key):
-    user = ShopUser.objects.filter(email = email).first()
+    user = ShopUser.objects.filter(email = email).first().select_related()
     if user and user.activation_key == key and not user.is_activation_key_expired():
         user.is_active = True
         user.activation_key = ''

@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'adminapp',
     'social_django',
     'ordersapp',
-
+    'debug_toolbar',
+    'template_profiler_panel',
+    'django_extensions',
 ]
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
@@ -62,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
 
@@ -145,14 +148,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "geekshop","static"),
-    os.path.join(BASE_DIR, "basketapp","static"),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "geekshop","static"),
+#     os.path.join(BASE_DIR, "basketapp","static"),
+# )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
+
+STATIC_ROOT = '/home/django/dj2a/geekshop/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -177,7 +182,8 @@ EMAIL_USE_SSL=os.getenv('EMAIL_USE_SSL')
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/emails'
 
-DOMAIN_NAME = 'http://localhost:8000'
+# DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = 'http://5.63.153.250'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -205,3 +211,29 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
+
+if DEBUG:
+   def show_toolbar(request):
+       return True
+
+   DEBUG_TOOLBAR_CONFIG = {
+       'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+   }
+
+   DEBUG_TOOLBAR_PANELS = [
+       'debug_toolbar.panels.versions.VersionsPanel',
+       'debug_toolbar.panels.timer.TimerPanel',
+       'debug_toolbar.panels.settings.SettingsPanel',
+       'debug_toolbar.panels.headers.HeadersPanel',
+       'debug_toolbar.panels.request.RequestPanel',
+       'debug_toolbar.panels.sql.SQLPanel',
+       'debug_toolbar.panels.templates.TemplatesPanel',
+       'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+       'debug_toolbar.panels.cache.CachePanel',
+       'debug_toolbar.panels.signals.SignalsPanel',
+       'debug_toolbar.panels.logging.LoggingPanel',
+       'debug_toolbar.panels.redirects.RedirectsPanel',
+       'debug_toolbar.panels.profiling.ProfilingPanel',
+       'template_profiler_panel.panels.template.TemplateProfilerPanel',
+   ]
+
