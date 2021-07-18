@@ -95,27 +95,27 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "geekshop","static"),
-    os.path.join(BASE_DIR, "basketapp","static"),
-)
-DOMAIN_NAME = 'http://localhost:8000'
-
-# DOMAIN_NAME = 'http://5.63.153.250'
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'geekshop',
-#         'USER': 'postgres'
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+#
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "geekshop","static"),
+#     os.path.join(BASE_DIR, "basketapp","static"),
+# )
+# DOMAIN_NAME = 'http://localhost:8000'
+
+DOMAIN_NAME = 'http://5.63.153.250'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'geekshop',
+        'USER': 'postgres'
+    }
+}
 
 
 # Password validation
