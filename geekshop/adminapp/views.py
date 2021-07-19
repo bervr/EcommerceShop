@@ -105,11 +105,21 @@ class CategoryUpdateView(UpdateView):
     template_name = 'adminapp/category_create.html'
     context_object_name = 'category'
     success_url = reverse_lazy('admin_staff:categories')
+    # initial =
+    # exclude = ('name',)
     fields = '__all__'
+
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+    def get_initial(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        initial = super().get_initial()
+        # initial = initial.copy()
+        initial['category'] = ProductCategory.objects.get(pk=pk)
+        return initial
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
