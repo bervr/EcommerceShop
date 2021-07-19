@@ -5,7 +5,7 @@
 					<a class="explore" href="/products/category/0/">показать все <img src="/static/img/arrow.png" alt=""></a>
 				</div>
 				<div class="related-products clearfix">
-                {% if same_products.len != None %}
+                {% if same_products.len == None %}
                     {#греем кэш#}
                 {% endif %}
                     {% for one_same in same_products %}
