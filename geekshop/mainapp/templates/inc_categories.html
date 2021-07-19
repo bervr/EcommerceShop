@@ -1,4 +1,7 @@
-{{links_menu   }}
+{% if  links_menu == None%}
+{#греем кэш#}
+{% endif %}
+
 <ul class="links-menu">
     <li>
         <a href="{% url 'products:category' 0 %}"
