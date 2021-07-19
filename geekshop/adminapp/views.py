@@ -153,9 +153,11 @@ class ProductListView(ListView):
         context = super().get_context_data(**kwargs)
         pk = self.kwargs.get('pk')
         category = get_object_or_404(ProductCategory, pk= pk)
+        objects = Product.objects.filter(category = category)
         context.update({'title': 'Продукты категории',
                         'category': category,
-                        'pk': pk
+                        'pk': pk,
+                        'objects': objects
                         })
         return context
 
