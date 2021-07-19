@@ -11,6 +11,7 @@ from django.core.cache import cache
 
 
 def get_links_menu():
+    return ProductCategory.objects.filter(is_active=True).select_related()
     if settings.LOW_CACHE:
         print('LOW_CACHE')
         key = 'links_menu'
@@ -24,6 +25,7 @@ def get_links_menu():
         return ProductCategory.objects.filter(is_active=True).select_related()
 
 def get_product(pk):
+    return get_object_or_404(Product, pk=pk)
     if settings.LOW_CACHE:
         print('LOW_CACHE')
         key = f'product_{pk}'
