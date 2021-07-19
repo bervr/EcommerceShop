@@ -12,6 +12,7 @@ from django.core.cache import cache
 
 def get_links_menu():
     if settings.LOW_CACHE:
+        print('LOW_CACHE')
         key = 'links_menu'
         links_menu = cache.get(key)
         if links_menu is None:
@@ -24,6 +25,7 @@ def get_links_menu():
 
 def get_product(pk):
     if settings.LOW_CACHE:
+        print('LOW_CACHE')
         key = f'product_{pk}'
         product_item = cache.get(key)
         if product_item is None:
