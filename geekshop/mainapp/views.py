@@ -47,7 +47,9 @@ def get_hot_product():
 
 
 def get_same_products(hot_products):
+    print(hot_products)
     same_products = Product.objects.filter(category=hot_products.category).select_related().exclude(pk=hot_products.pk)[:3]
+    print(same_products)
     return same_products
 
 
