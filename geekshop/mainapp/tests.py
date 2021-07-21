@@ -1,3 +1,4 @@
+from django.core.management import call_command
 from django.test import TestCase, Client
 
 from mainapp.models import ProductCategory, Product
@@ -7,13 +8,15 @@ class TestMainSmokeTest(TestCase):
     status_code_success = 200
 
     def setUp(self):
-        cat_1 = ProductCategory.objects.create(
-            name='cat_1'
-        )
-        Product.objects.create(
-            category=cat_1,
-            name='prod_1'
-        )
+        # cat_1 = ProductCategory.objects.create(
+        #     name='cat_1'
+        # )
+        # Product.objects.create(
+        #     category=cat_1,
+        #     name='prod_1'
+        # )
+        call_command('flush', '--noinput')
+        call_command('loaddata', 'test_db.json')
         self.client = Client()
 
 
