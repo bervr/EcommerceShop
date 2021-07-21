@@ -144,8 +144,7 @@ class CategoryDeleteView(DeleteView):
     def post(self, request, pk, *args, **kwargs):
         category = get_object_or_404(ProductCategory, pk=pk)
         if request.method == 'POST':
-            category.is_active = False
-            category.save()
+            category.change_activity()
             return HttpResponseRedirect(reverse('admin_staff:categories'))
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
@@ -223,7 +222,8 @@ class ProductReadView(DetailView):
 class ProductUpdateView(UpdateView):
     model = Product
     template_name = 'adminapp/product.html'
-    fields = "__all__"
+    form_class = ProductEditForm
+    # fields = "__all__"
 
     def get_initial(self, **kwargs):
         pk = self.kwargs.get('pk')
@@ -268,6 +268,7 @@ class ProductDeleteView(DeleteView):
             product = Product.objects.get(pk=pk)
             category = product.category
             product.is_active = False
+            product.state_active = False
             product.save()
             return HttpResponseRedirect(reverse('admin_staff:products', args=[category.pk]))
 
