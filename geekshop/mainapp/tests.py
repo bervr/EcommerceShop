@@ -8,16 +8,16 @@ class TestMainSmokeTest(TestCase):
     status_code_success = 200
 
     def setUp(self):
-        # cat_1 = ProductCategory.objects.create(
-        #     name='cat_1'
-        # )
-        # Product.objects.create(
-        #     category=cat_1,
-        #     name='prod_1'
-        # )
-        call_command('flush', '--noinput')
-        call_command('loaddata', 'test_db.json')
-        self.client = Client()
+        cat_1 = ProductCategory.objects.create(
+            name='cat_1'
+        )
+        Product.objects.create(
+            category=cat_1,
+            name='prod_1'
+        )
+        # call_command('flush', '--noinput')
+        # call_command('loaddata', 'test_db.json')
+        # self.client = Client()
 
 
     def test_main_app_urls(self):
@@ -29,6 +29,6 @@ class TestMainSmokeTest(TestCase):
             response = self.client.get(f'/products/product/{product_item.pk}')
             self.assertEqual(response.status_code, self.status_code_success)
 
-    def tearDown(self):
-        call_command('sqlsequencereset', 'mainapp', 'authapp', 'ordersapp', \
-                     'basketapp')
+    # def tearDown(self):
+    #     call_command('sqlsequencereset', 'mainapp', 'authapp', 'ordersapp', \
+    #                  'basketapp')
