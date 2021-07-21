@@ -6,7 +6,7 @@ from .models import ProductCategory, Product
 from basketapp.models import Basket
 from django.conf import settings
 from django.core.cache import cache
-
+from django.urls import get_resolver
 
 
 
@@ -51,6 +51,7 @@ def get_hot_product():
 
 
 def get_same_products(hot_products):
+
     same_products = Product.objects.filter(category=hot_products.category, is_active=True).select_related().exclude(pk=hot_products.pk)[:3]
     return same_products
 
