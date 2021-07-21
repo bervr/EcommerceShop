@@ -15,7 +15,7 @@ class TestMainSmokeTest(TestCase):
         #     category=cat_1,
         #     name='prod_1'
         # )
-        call_command('flush', '--noinput')
+        # call_command('flush', '--noinput')
         call_command('loaddata', 'test_db.json')
         self.client = Client()
 
