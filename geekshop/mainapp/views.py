@@ -88,7 +88,7 @@ def products(request, pk=None):
     return render(request, 'products_list.html', context=context)
 
 
-@login_required
+# @login_required
 def product(request, pk):
     title = 'страница продута'
     product = get_product(pk)
