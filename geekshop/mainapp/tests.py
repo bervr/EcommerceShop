@@ -26,7 +26,8 @@ class TestMainSmokeTest(TestCase):
 
     def test_products_urls(self):
         for product_item in Product.objects.all():
-            response = self.client.get(f'products/product/{product_item.pk}/')
+            response = self.client.get(f'/products/product/{product_item.pk}/')
+            print(product_item.pk)
             self.assertEqual(response.status_code, self.status_code_success)
 
     # def tearDown(self):
