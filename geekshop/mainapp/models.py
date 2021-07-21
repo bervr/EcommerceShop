@@ -73,12 +73,9 @@ class Product(models.Model):
         return f'{self.name} ({self.category})'
 
     def change_activity(self):
-        print("смена активнсти категории")
         if self.category.is_active:
             self.is_active = self.state_active
-            print('вернуть продукты как были')
         else:
-            print('отключить продукты')
             self.state_active = self.is_active
             self.is_active = False
 
