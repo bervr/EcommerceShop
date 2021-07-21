@@ -15,7 +15,7 @@ class TestMainSmokeTest(TestCase):
         #     category=cat_1,
         #     name='prod_1'
         # )
-        # call_command('flush', '--noinput')
+        call_command('flush', '--noinput')
         call_command('loaddata', 'test_db.json')
         self.client = Client()
 
@@ -28,3 +28,7 @@ class TestMainSmokeTest(TestCase):
         for product_item in Product.objects.all():
             response = self.client.get(f'/products/product/{product_item.pk}')
             self.assertEqual(response.status_code, self.status_code_success)
+
+    def tearDown(self):
+        call_command('sqlsequencereset', 'mainapp', 'authapp', 'ordersapp', \
+                     'basketapp')
