@@ -3,12 +3,13 @@
 /geekshop/.env
 /geekshop/tmp/
 /venv/
-*/__pycache__/
+*/__pycache__/*
 media
 
 *.log
 *.pot
 *.pyc
+
 __pycache__
 
 .idea/**/workspace.xml
