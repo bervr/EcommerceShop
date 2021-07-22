@@ -35,13 +35,13 @@ window.onload = function (){
         deltaQuantity = +quantityArr[_orderitemNum]}
     orderSummaryUpdate(priceArr[_orderitemNum], deltaQuantity);
     });
-
+function orderSummaryRecalc()
     function orderSummaryRecalc(){
         orderTotalCost = 0
         orderTotalQuantity = 0
 
         for(let i=0; i<totalForms; i++){
-            orderTotalCost += priceArr[i]
+            orderTotalCost += priceArr[i]*quantityArr[i]
             orderTotalQuantity += quantityArr[i]
         $('.order_total_cost').html(orderTotalCost.toString());
         $('.order_total_quantity').html(orderTotalQuantity.toString());
