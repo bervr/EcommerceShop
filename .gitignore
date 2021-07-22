@@ -4,6 +4,7 @@
 /geekshop/tmp/
 /venv/
 */__pycache__/
+media
 
 *.log
 *.pot
