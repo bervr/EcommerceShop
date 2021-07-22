@@ -84,20 +84,20 @@ class UserManagementTestCase(TestCase):
         self.assertEqual(response.context['title'], 'регистрация')
         self.assertTrue(response.context['user'].is_anonymous)
 
-        # # логин с данными пользователя
-        # response = self.client.post('/auth/register/', data=self.new_user_data,)
-        # self.assertEqual(response.status_code, self.status_code_redirect)
-        # # self.assertFalse(response.context['user'].is_anonymous)
-        #
-        # new_user = ShopUser.objects.get(username=self.new_user_data['username'])
-        #
-        # activation_url = f'{settings.DOMAIN_NAME}/auth/activate/{new_user.email}/{new_user.activation_key}'
-        # response = self.client.get(activation_url)
-        # self.assertEqual(response.status_code, self.status_code_success)
-        #
-        #
-        # new_user.refresh_from_db()
-        # self.assertTrue(new_user.is_active)
+        # логин с данными пользователя
+        response = self.client.post('/auth/register/', data=self.new_user_data,)
+        self.assertEqual(response.status_code, self.status_code_success)
+        # self.assertFalse(response.context['user'].is_anonymous)
+
+        new_user = ShopUser.objects.get(username=self.new_user_data['username'])
+
+        activation_url = f'{settings.DOMAIN_NAME}/auth/activate/{new_user.email}/{new_user.activation_key}'
+        response = self.client.get(activation_url)
+        self.assertEqual(response.status_code, self.status_code_success)
+
+
+        new_user.refresh_from_db()
+        self.assertTrue(new_user.is_active)
 
 
 

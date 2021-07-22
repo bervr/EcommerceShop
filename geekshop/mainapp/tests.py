@@ -29,6 +29,3 @@ class TestMainSmokeTest(TestCase):
             response = self.client.get(f'/products/product/{product_item.pk}/')
             self.assertEqual(response.status_code, self.status_code_success)
 
-    # def tearDown(self):
-    #     call_command('sqlsequencereset', 'mainapp', 'authapp', 'ordersapp', \
-    #                  'basketapp')
