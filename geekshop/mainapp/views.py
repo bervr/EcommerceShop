@@ -4,18 +4,50 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from .models import ProductCategory, Product
 from basketapp.models import Basket
+from django.conf import settings
+from django.core.cache import cache
 
+
+
+
+def get_links_menu():
+    return ProductCategory.objects.filter(is_active=True).select_related()
+    if settings.LOW_CACHE:
+        print('LOW_CACHE')
+        key = 'links_menu'
+        links_menu = cache.get(key)
+        if links_menu is None:
+            links_menu = ProductCategory.objects.filter(is_active=True).select_related()
+            cache.set(key, links_menu)
+        else:
+            return links_menu
+    else:
+        return ProductCategory.objects.filter(is_active=True).select_related()
+
+def get_product(pk):
+    return get_object_or_404(Product, pk=pk)
+    if settings.LOW_CACHE:
+        print('LOW_CACHE')
+        key = f'product_{pk}'
+        product_item = cache.get(key)
+        if product_item is None:
+            product_item = get_object_or_404(Product, pk=pk)
+            cache.set(key, product_item)
+        else:
+            return product_item
+    else:
+        return get_object_or_404(Product, pk=pk)
+
+
+def get_hot_product():
+    products = Product.objects.all().select_related()
+    return sample(list(products), 1)[0]
 
 # def get_basket(user):
 #     if user.is_authenticated:
 #         return Basket.objects.filter(user=user)
 #     else:
 #         return []
-
-
-def get_hot_product():
-    products = Product.objects.all().select_related()
-    return sample(list(products), 1)[0]
 
 
 def get_same_products(hot_products):
@@ -47,6 +79,7 @@ def products(request, pk=None):
         'categories': categories,
         'category': category,
         'products': products,
+        'links_menu':get_links_menu(),
         # 'basket': basket,
         'same_products': same_products,
         'hot_product': hot_product,
@@ -57,10 +90,11 @@ def products(request, pk=None):
 @login_required
 def product(request, pk):
     title = 'страница продута'
-    product = get_object_or_404(Product, pk=pk).select_related()
+    product = get_product(pk)
     context = {
         'title': title,
-        'categories': ProductCategory.objects.all(),
+        'links_menu': get_links_menu(),
+        # 'categories': ProductCategory.objects.all(),
         'product': product,
         # 'basket': get_basket(request.user),
         'same_products': get_same_products(product),

@@ -25,9 +25,13 @@ html, body {
 .slider {
 	height: 800px;
 	background-image: url(img/slider.jpg); 
-	padding-left: 98px;
-	padding-right: 211px;
+	padding-left: 10px;
+	/*padding-right: 211px;*/
 	position: relative;
+}
+
+.menu-correct{
+	padding: 5px 18px;
 }
 
 .logo {
@@ -76,9 +80,9 @@ html, body {
 	width: 22px;
 	height: 22px;
 	background-image: url(img/search.png);
-	/*position: absolute;
+	position: absolute;
 	top: 63px;
-	left: 1176px;*/
+	left: 1176px;
 }
 .basket {
 	display: block;

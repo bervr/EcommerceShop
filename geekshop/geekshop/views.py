@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from basketapp.models import Basket
+from django.views.decorators.cache import cache_page
 from mainapp.models import Product, ProductCategory
 # Create your views here.
 
@@ -17,6 +18,6 @@ def main(request):
     }
     return render(request, 'index.html', context=do_active)
 
-
+@cache_page(3600)
 def contacts(request):
     return render(request, 'contacts.html')

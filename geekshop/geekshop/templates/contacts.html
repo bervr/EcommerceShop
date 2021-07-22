@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 
 <!DOCTYPE html>
 <html>
@@ -9,14 +9,13 @@
 	{% endblock %}
 </head>
 <body>
-	<div class="container">
-		{% block slider %}
-		<div class="hero">
+    {% block menu %}
+    		<div class="hero">
 				{% include 'inc_menu.html' %}
 			<h1>наши контакты</h1>
 		</div>
-		{% endblock %}
-		{% block content %}
+    {% endblock %}
+    {% block content %}
 		<div class="location">
 			<div class="location-1">
 				<i class="fa fa-map-marker fa-5x"></i>
@@ -67,4 +66,4 @@
 				</div>
 			</div>
 		</div>
-		{% endblock %}
+    {% endblock %}

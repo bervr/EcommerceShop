@@ -1,3 +1,5 @@
+
+
 <ul class="links-menu">
     <li>
         <a href="{% url 'products:category' 0 %}"
@@ -8,7 +10,7 @@
         </a>
     </li>
 
-    {% for link in categories %}
+    {% for link in links_menu %}
         <li>
             <a href="{% url 'products:category' link.pk %}"
                class="{% if request.resolver_match.kwargs.pk == link.pk %}
