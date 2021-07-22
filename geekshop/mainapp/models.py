@@ -18,6 +18,17 @@ class ProductCategory(models.Model):
 
     is_active = models.BooleanField(default=True)
 
+    def change_activity(self):
+        self.is_active = not self.is_active
+        self.save()
+        for item in self.products.select_related():
+            item.change_activity()
+            item.save()
+        # self.save()
+
+
+
+
 
 
 class Product(models.Model):
@@ -25,6 +36,7 @@ class Product(models.Model):
         ProductCategory,
         on_delete=models.CASCADE,
         verbose_name='категория',
+        related_name="products",
     )
     name = models.CharField(
         verbose_name='имя продукта',
@@ -55,6 +67,18 @@ class Product(models.Model):
         default=0,
     )
     is_active = models.BooleanField(default=True)
+    state_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.name} ({self.category})'
+
+    def change_activity(self):
+        if self.category.is_active:
+            self.is_active = self.state_active
+        else:
+            self.state_active = self.is_active
+            self.is_active = False
+
+    def get_items(self):
+        return Product.objects.filter(is_active=True)
+

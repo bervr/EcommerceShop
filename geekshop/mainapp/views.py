@@ -6,7 +6,7 @@ from .models import ProductCategory, Product
 from basketapp.models import Basket
 from django.conf import settings
 from django.core.cache import cache
-
+from django.urls import get_resolver
 
 
 
@@ -40,7 +40,7 @@ def get_product(pk):
 
 
 def get_hot_product():
-    products = Product.objects.all().select_related()
+    products = Product.objects.filter(is_active=True).select_related()
     return sample(list(products), 1)[0]
 
 # def get_basket(user):
@@ -51,7 +51,8 @@ def get_hot_product():
 
 
 def get_same_products(hot_products):
-    same_products = Product.objects.filter(category=hot_products.category).select_related().exclude(pk=hot_products.pk)[:3]
+
+    same_products = Product.objects.filter(category=hot_products.category, is_active=True).select_related().exclude(pk=hot_products.pk)[:3]
     return same_products
 
 
@@ -87,7 +88,7 @@ def products(request, pk=None):
     return render(request, 'products_list.html', context=context)
 
 
-@login_required
+# @login_required
 def product(request, pk):
     title = 'страница продута'
     product = get_product(pk)

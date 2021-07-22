@@ -13,7 +13,7 @@ from .models import ShopUser
 
 
 
-@csrf_exempt
+# @csrf_exempt
 def login(request):
     title = 'Вход'
 
@@ -66,6 +66,7 @@ def register(request):
         if register_form.is_valid():
             user = register_form.save()
             send_activation_link(user)
+            # login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return render(request, 'authapp/sended.html')
             # return HttpResponseRedirect(reverse('auth:login'))
     else:
@@ -84,13 +85,13 @@ def send_activation_link(user):
 
 
 def activate(request, email, key):
-    user = ShopUser.objects.filter(email = email).first().select_related()
+    user = ShopUser.objects.filter(email = email).first()
     if user and user.activation_key == key and not user.is_activation_key_expired():
         user.is_active = True
         user.activation_key = ''
         user.is_activation_key_expired = None
         user.save()
-        auth.login(request, user)
+        auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         # return HttpResponseRedirect(reverse('auth:login'))
     return render(request, 'authapp/activate.html')
 

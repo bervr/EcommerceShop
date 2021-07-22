@@ -48,6 +48,7 @@
             </h2>
             <div class="category-products row">
               {% for product in products %}
+                  {% if product.is_active %}
                 <div class="block w-25 my-3 mx-3">
                   <a href="{% url 'products:product' product.pk %}">
                     <img width="250" src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
@@ -58,6 +59,7 @@
                     </div>
                   </a>
                 </div>
+                  {% endif %}
               {% endfor %}
             </div>
         {% include 'inc_related.html' %}
