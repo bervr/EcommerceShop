@@ -35,7 +35,7 @@ window.onload = function (){
         deltaQuantity = +quantityArr[_orderitemNum]}
     orderSummaryUpdate(priceArr[_orderitemNum], deltaQuantity);
     });
-    function orderSummaryRecalc();
+    orderSummaryRecalc();
 
     function orderSummaryRecalc(){
         orderTotalCost = 0
