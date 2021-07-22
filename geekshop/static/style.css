@@ -16,6 +16,10 @@ html, body {
 	height: 384px;
 }
 
+.little {
+	height: 50px;
+}
+
 .container{
 	width: 1366px;
 	margin: 0 auto;

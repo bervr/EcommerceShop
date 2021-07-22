@@ -79,3 +79,6 @@ class Product(models.Model):
             self.state_active = self.is_active
             self.is_active = False
 
+    def get_items(self):
+        return Product.objects.filter(is_active=True)
+
