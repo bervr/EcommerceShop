@@ -5,6 +5,7 @@
 /venv/
 */__pycache__/
 media
+django_extensions
 
 *.log
 *.pot
