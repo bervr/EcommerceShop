@@ -13,7 +13,7 @@ from .models import ShopUser
 
 
 
-@csrf_exempt
+# @csrf_exempt
 def login(request):
     title = 'Вход'
 
@@ -91,7 +91,7 @@ def activate(request, email, key):
         user.activation_key = ''
         user.is_activation_key_expired = None
         user.save()
-        auth.login(request, user)
+        auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         # return HttpResponseRedirect(reverse('auth:login'))
     return render(request, 'authapp/activate.html')
 

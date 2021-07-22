@@ -18,12 +18,14 @@ class UserManagementTestCase(TestCase):
         'password2': 'G12eekbrains',
         'email': 'django1@gb.local',
         'age': '33',
+
         }
 
 
     def setUp(self):
        self.user = ShopUser.objects.create_superuser(username=self.username,email=self.email,password=self.password)
        self.client = Client()
+
 
     def test_login(self):
         response = self.client.get('/')
@@ -76,14 +78,24 @@ class UserManagementTestCase(TestCase):
         self.assertTrue(response.context['user'].is_anonymous)
 
     def test_user_register(self):
-        # # логин без данных пользователя
-        # response = self.client.get('/auth/register/')
-        # self.assertEqual(response.status_code, self.status_code_success)
-        # self.assertEqual(response.context['title'], 'регистрация')
-        # self.assertTrue(response.context['user'].is_anonymous)
+
+        # логин без данных пользователя
+        response = self.client.get('/auth/register/')
+        self.assertEqual(response.status_code, self.status_code_success)
+        self.assertEqual(response.context['title'], 'регистрация')
+        self.assertTrue(response.context['user'].is_anonymous)
 
         # логин с данными пользователя
-        response = self.client.post('/auth/register/', data=self.new_user_data)
+
+        # логин без данных пользователя
+        response = self.client.get('/auth/register/')
+        self.assertEqual(response.status_code, self.status_code_success)
+        self.assertEqual(response.context['title'], 'регистрация')
+        self.assertTrue(response.context['user'].is_anonymous)
+
+        # логин с данными пользователя
+        response = self.client.post('/auth/register/', data=self.new_user_data,)
+
         self.assertEqual(response.status_code, self.status_code_success)
         # self.assertFalse(response.context['user'].is_anonymous)
 
